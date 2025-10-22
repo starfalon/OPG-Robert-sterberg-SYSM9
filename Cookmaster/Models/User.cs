@@ -8,5 +8,29 @@ namespace Cookmaster.Models
 {
     class User
     {
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
+        public string Country { get; set; }
+
+        public bool ValidateLogin(string username, string password)
+        {
+            return Username == username && Password == password;
+        } 
+
+        public void ChangePassword(string newPassword)
+        {
+            Password = newPassword;
+        }
+
+        public void UpdateDetails(string username, string country)
+        {
+            Username = username;
+            Country = country;
+        }
+
+        
+
     }
 }
