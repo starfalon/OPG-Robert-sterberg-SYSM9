@@ -40,7 +40,34 @@ namespace Cookmaster.Managers
             return true;
         }
 
+        public User FindUser(string username)  //letar upp users i listan user
+        {
+            foreach (var user in users)
+            {
+                if (user.Username == username)
+                {
+                    return user;
+                }
+            }
+            return null; 
+        }
 
+        public void ChangePassword(string username, string newPassword)
+        {
+            foreach (var user in users)
+            {
+                if (user.Username == username)
+                {
+                    user.ChangePassword(newPassword);
+                    return;
+                }
+            }
+        }
+
+    public User GetLoggedIn() //loggedin = currentuser
+        {
+            return loggedIn;
+        }
 
 
     }
