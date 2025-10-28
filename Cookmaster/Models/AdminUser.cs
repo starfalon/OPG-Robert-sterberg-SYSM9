@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cookmaster.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +10,14 @@ namespace Cookmaster.Models
     class AdminUser : User
 
     {
-        public void RemoveAnyRecipe(recipe)
+        public void RemoveAnyRecipe(RecipeManager manager, Recipe recipe)
         {
-            RemoveAnyRecipe(recipe);
+           manager.RemoveRecipe(recipe);
         }
 
-        public List<Recipe> ViewAllRecipes(RecipeManager)
+        public List<Recipe> ViewAllRecipes(RecipeManager manager)
         {
-            return 0;
+            return manager.GetAllRecipes();
         }
     }
 }
