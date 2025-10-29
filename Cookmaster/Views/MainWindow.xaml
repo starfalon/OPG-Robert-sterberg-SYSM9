@@ -1,0 +1,20 @@
+﻿<Window x:Class="Cookmaster.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cookmaster"
+        mc:Ignorable="d"
+        Title="CookMaster" Height="450" Width="800" >
+    <StackPanel>
+        <TextBlock Text="CookMaster" FontWeight="Bold" FontSize="50" HorizontalAlignment="Center" Margin="100"/>
+        <TextBox Text="{Binding Username}" Margin="300, 0, 300, 10"/>
+        <PasswordBox x:Name="PassWordBox" Margin="300, 0, 300, 10"/>
+        <Button Content="Sign in" Command="{Binding LoginCommand}"
+                CommandParameter="{Binding ElementName=PassWordBox, Path=Password}" Margin="325, 0, 325, 10"/>
+        <Button Content="Register" Command="{Binding OpenRegisterCommand}" Margin="350, 0, 350, 0 "/>
+        <Button Content="Forgot Password?" Command="{Binding ForgotPasswordCommand}"
+                Foreground="Blue" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center"/>
+
+    </StackPanel>
+</Window>
