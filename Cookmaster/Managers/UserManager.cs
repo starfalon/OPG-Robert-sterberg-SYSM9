@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cookmaster.Managers
 {
-    class UserManager
+    public class UserManager
     {
         private List<User> users = new List<User>();
         private User loggedIn;
