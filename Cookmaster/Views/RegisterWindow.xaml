@@ -12,6 +12,8 @@
         <PasswordBox Name="PasswordBox"/>
         <PasswordBox x:Name="ConfirmBox"/>
         <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"/>
+        <Button Content="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding ElementName=PasswordBox, Path=Password}"
+                Tag="{Binding ElementName=ConfirmBox, Path=Password}"/>
 
     </StackPanel>
 </Window>

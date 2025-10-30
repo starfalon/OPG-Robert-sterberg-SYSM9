@@ -26,7 +26,7 @@ namespace Cookmaster.Managers
             return false;
         }
 
-        public bool Register(string username, string password, string country)
+        public bool Register(string username, string password, string country, string question, string answer)
         {
             foreach (var user in users)
             {
@@ -36,7 +36,7 @@ namespace Cookmaster.Managers
                 }
             }
 
-            users.Add(new User { Username = username, Password = password, Country = country });
+            users.Add(new User { Username = username, Password = password, Country = country, SecurityQuestion = question, SecurityAnswer = answer });
             return true;
         }
 
@@ -64,12 +64,23 @@ namespace Cookmaster.Managers
             }
         }
 
-    public User GetLoggedIn() //loggedin = currentuser
+        public User GetLoggedIn() //loggedin = currentuser
         {
             return loggedIn;
         }
 
+        public bool ResetPassword(string username, string securityAnswer, string newPassword)
+        {
+            var user = users.FirstOrDefault(u => u.Username == username);
+            if (user == null) return false;
 
+
+            if (!string.Equals(user.SecurityAnswer, securityAnswer, StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            user.Password = newPassword;
+            return true;
+        }
     }
 
 }

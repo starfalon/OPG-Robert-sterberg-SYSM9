@@ -19,7 +19,7 @@ namespace Cookmaster.Views
     /// </summary>
     public partial class RecipeListWindow : Window
     {
-        public RecipeListWindow()
+        public RecipeListWindow(Managers.UserManager userManager)
         {
             InitializeComponent();
         }

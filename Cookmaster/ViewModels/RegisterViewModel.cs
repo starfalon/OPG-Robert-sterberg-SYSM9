@@ -23,6 +23,10 @@ namespace Cookmaster.ViewModels
         {
             "Latveria", "Wakanda", "Sokovia", "Madripoor", "Genosha"
         };
+
+        public string SecurityQuestion { get; set; }
+        public string SecurityAnswer { get; set; }
+
         public RelayCommand RegisterCommand { get; }
         public RegisterViewModel(UserManager manager)
         {
@@ -85,7 +89,7 @@ namespace Cookmaster.ViewModels
            if (_userManager.FindUser(username) != null)
                 return false;
 
-            return _userManager.Register(username, password, selectedCountry);
+            return _userManager.Register(username, password, selectedCountry, SecurityQuestion, SecurityAnswer); 
         }
 
 

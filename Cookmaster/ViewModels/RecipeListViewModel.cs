@@ -19,7 +19,12 @@ namespace Cookmaster.ViewModels
         public User CurrentUser { get; }
 
         private readonly RecipeManager _recipeManager;
+
         private readonly UserManager _userManager;
+        public RecipeListViewModel(UserManager usermanager)
+        {
+            _userManager = usermanager;
+        }
 
 
     }

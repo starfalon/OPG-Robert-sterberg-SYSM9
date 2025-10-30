@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cookmaster.Models;
+using Cookmaster.Managers;
 
 namespace Cookmaster.Views
 {
@@ -17,10 +19,11 @@ namespace Cookmaster.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly UserManager _userManager = new UserManager();
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel(_userManager);
         }
 
     }

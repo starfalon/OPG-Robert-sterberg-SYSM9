@@ -14,6 +14,10 @@ namespace Cookmaster.Models
 
         public string Country { get; set; }
 
+        //test
+        public string SecurityQuestion { get; set; }
+        public string SecurityAnswer { get; set; }
+
         public bool ValidateLogin(string username, string password)
         {
             return Username == username && Password == password;

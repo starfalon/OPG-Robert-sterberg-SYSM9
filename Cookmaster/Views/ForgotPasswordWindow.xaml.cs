@@ -1,6 +1,4 @@
-﻿using Cookmaster.Managers;
-using Cookmaster.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,19 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Cookmaster.Models;
 
 namespace Cookmaster.Views
 {
     /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
+    /// Interaction logic for ForgotPasswordWindow.xaml
     /// </summary>
-    public partial class RegisterWindow : Window
+    public partial class ForgotPasswordWindow : Window
     {
-        public RegisterWindow( UserManager userManager)
+        public ForgotPasswordWindow(Managers.UserManager userManager)
         {
             InitializeComponent();
-            DataContext = new RegisterViewModel(userManager);
         }
     }
 }

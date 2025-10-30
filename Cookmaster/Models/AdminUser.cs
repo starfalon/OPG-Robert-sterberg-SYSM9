@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cookmaster.Models
 {
-    class AdminUser : User
+   public  class AdminUser : User
 
     {
         public void RemoveAnyRecipe(RecipeManager manager, Recipe recipe)
