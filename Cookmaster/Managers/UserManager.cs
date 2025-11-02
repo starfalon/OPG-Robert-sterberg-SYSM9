@@ -12,9 +12,30 @@ namespace Cookmaster.Managers
         private List<User> users = new List<User>();
         private User loggedIn;
 
+        public UserManager()
+        {
+            // 🔹 Förinställda användare
+            users.Add(new AdminUser
+            {
+                Username = "admin",
+                Password = "password",
+                Country = "Sokovia",
+                SecurityQuestion = "What is your favorite color?",
+                SecurityAnswer = "red"
+            });
+
+            users.Add(new User
+            {
+                Username = "user",
+                Password = "password",
+                Country = "Latveria",
+                SecurityQuestion = "What is the name of your firrst pet?",
+                SecurityAnswer = "göran"
+            });
+        }
+
         public bool Login(string username, string password)
         {
-            
             foreach (User u in users)
             {
                 if (u.Username == username && u.Password == password)

@@ -34,7 +34,7 @@ namespace Cookmaster.ViewModels
             var user = _userManager.FindUser(Username);
             if (user == null)
             {
-                MessageBox.Show("Användare hittades inte!");
+                MessageBox.Show("User cannot be found");
                 return;
             }
 

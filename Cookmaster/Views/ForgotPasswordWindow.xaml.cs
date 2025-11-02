@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cookmaster.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace Cookmaster.Views
         public ForgotPasswordWindow(Managers.UserManager userManager)
         {
             InitializeComponent();
+            DataContext = new ForgotPasswordViewModel(userManager);
         }
     }
 }

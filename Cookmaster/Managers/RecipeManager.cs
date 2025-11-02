@@ -25,6 +25,21 @@ namespace Cookmaster.Managers
         {
             return recipes;
         }
+
+        public List<string> GetAllCategories()
+        {
+            if (!recipes.Any())
+                return new List<string>();
+
+            // Returnera unika kategorier i bokstavsordning
+            return recipes
+                .Select(r => r.Category)
+                .Where(c => !string.IsNullOrWhiteSpace(c))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(c => c)
+                .ToList();
+        }
+
         public List<Recipe> GetByUser(User user)
         {
             List<Recipe> userRecipes = new List<Recipe>();

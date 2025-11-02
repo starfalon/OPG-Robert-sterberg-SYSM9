@@ -26,6 +26,12 @@ namespace Cookmaster.ViewModels
 
         public string SecurityQuestion { get; set; }
         public string SecurityAnswer { get; set; }
+        public List<string> SecurityQuestions { get; } = new List<string>
+        {
+            "What is your favorite color?",
+            "What is your mother's maiden name?",
+            "What is the name of your firrst pet?",
+        };
 
         public RelayCommand RegisterCommand { get; }
         public RegisterViewModel(UserManager manager)
@@ -48,11 +54,12 @@ namespace Cookmaster.ViewModels
             
             if (!ValidatePassword(password, confirmPassword))
             {
-                MessageBox.Show("The password doesn't match, and has to include at least 6 characters, 1 capital letter and one number :)");
+                MessageBox.Show("The password doesn't match, and has to include at least 8 characters, 1 capital letter and one number :)");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(SelectedCountry))
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(SelectedCountry) || string.IsNullOrWhiteSpace(SecurityQuestion) ||
+                string.IsNullOrWhiteSpace(SecurityAnswer))
             {
                 MessageBox.Show("Please fill out every field");
                 return;
@@ -64,7 +71,14 @@ namespace Cookmaster.ViewModels
             if (success)
             {
                 MessageBox.Show("Registration complete!");
-                window.Close();
+
+                var mainWindow = new MainWindow
+                {
+                    DataContext = new MainWindowViewModel(App.GlobalUserManager)
+                };
+                mainWindow.Show();
+
+                Application.Current.Windows.OfType<RegisterWindow>().FirstOrDefault()?.Close();
             }
             else
             {
@@ -76,7 +90,7 @@ namespace Cookmaster.ViewModels
         {
             if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
                 return false;
-            if (password.Length < 6)
+            if (password.Length < 8)
                 return false;
 
             bool hasNbr = password.Any(char.IsDigit);
@@ -84,7 +98,7 @@ namespace Cookmaster.ViewModels
             return hasNbr && hasUpper;
         }
         
-        bool CreateUser(string username, string password, string selectedCountry)
+       public bool CreateUser(string username, string password, string selectedCountry)
         {
            if (_userManager.FindUser(username) != null)
                 return false;

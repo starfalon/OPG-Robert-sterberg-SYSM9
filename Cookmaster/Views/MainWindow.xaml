@@ -11,7 +11,7 @@
         <TextBox Text="{Binding Username}" Margin="300, 0, 300, 10"/>
         <PasswordBox x:Name="PassWordBox" Margin="300, 0, 300, 10"/>
         <Button Content="Sign in" Command="{Binding LoginCommand}"
-                CommandParameter="{Binding ElementName=PassWordBox, Path=Password}" Margin="325, 0, 325, 10"/>
+                CommandParameter="{Binding ElementName=PassWordBox}" Margin="325, 0, 325, 10"/>
         <Button Content="Register" Command="{Binding OpenRegisterCommand}" Margin="350, 0, 350, 0 "/>
         <Button Content="Forgot Password?" Command="{Binding ForgotPasswordCommand}"
                 Foreground="Blue" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center"/>

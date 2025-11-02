@@ -6,14 +6,67 @@
         xmlns:local="clr-namespace:Cookmaster.Views"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
-    <StackPanel>
-        <TextBlock Text="Register new user" FontSize="20"/>
-        <TextBox Text="{Binding Username}"/>
-        <PasswordBox Name="PasswordBox"/>
-        <PasswordBox x:Name="ConfirmBox"/>
-        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"/>
-        <Button Content="Register" Command="{Binding RegisterCommand}" CommandParameter="{Binding ElementName=PasswordBox, Path=Password}"
-                Tag="{Binding ElementName=ConfirmBox, Path=Password}"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <!-- Titel -->
+            <TextBlock Text="Skapa nytt konto" 
+                       FontSize="24" 
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,20"/>
 
-    </StackPanel>
+            <!-- 🔹 Användarnamn -->
+            <TextBlock Text="Användarnamn:" FontWeight="SemiBold"/>
+            <TextBox Text="{Binding Username}" 
+                     Margin="0,5,0,15"
+                     Height="25"/>
+
+            <!-- 🔹 Land -->
+            <TextBlock Text="Land:" FontWeight="SemiBold"/>
+            <ComboBox ItemsSource="{Binding Countries}"
+                      SelectedItem="{Binding SelectedCountry}"
+                      Margin="0,5,0,15"
+                      Height="25"/>
+
+            <!-- 🔹 Lösenord -->
+            <TextBlock Text="Lösenord:" FontWeight="SemiBold"/>
+            <PasswordBox x:Name="PasswordBox"
+                         Margin="0,5,0,15"
+                         Height="25"/>
+
+            <!-- 🔹 Bekräfta lösenord -->
+            <TextBlock Text="Bekräfta lösenord:" FontWeight="SemiBold"/>
+            <PasswordBox x:Name="ConfirmBox"
+                         Margin="0,5,0,15"
+                         Height="25"/>
+
+            <!-- 🔹 Säkerhetsfråga -->
+            <TextBlock Text="Säkerhetsfråga:" FontWeight="SemiBold"/>
+            <ComboBox ItemsSource="{Binding SecurityQuestions}"
+                      SelectedItem="{Binding SecurityQuestion}"
+                      Margin="0,5,0,15"
+                      Height="25"/>
+
+            <!-- 🔹 Säkerhetssvar -->
+            <TextBlock Text="Säkerhetssvar:" FontWeight="SemiBold"/>
+            <TextBox Text="{Binding SecurityAnswer}"
+                     Margin="0,5,0,20"
+                     Height="25"/>
+
+            <!-- 🔹 Registrera-knapp -->
+            <Button Content="Registrera"
+                    Command="{Binding RegisterCommand}"
+                    Height="40"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    Background="#FF007ACC"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    BorderThickness="0"
+                    Cursor="Hand"/>
+
+        </StackPanel>
+    </ScrollViewer>
+
+    
 </Window>

@@ -23,38 +23,59 @@ namespace Cookmaster.ViewModels
 
         public MainWindowViewModel(UserManager userManager) 
         {
-            _userManager = new UserManager();
+            
             LoginCommand = new RelayCommand(Login);
             OpenRegisterCommand = new RelayCommand(OpenRegister);
             ForgotPasswordCommand = new RelayCommand(OpenForgotPassword);
             _userManager = userManager;
         }
-
         private void Login(object parameter)
         {
-            var passwordBox = parameter as PasswordBox;
-            string password = passwordBox?.Password ?? "";
+            // ✅ parameter är PasswordBox (skickas från XAML)
+            var passwordBox = parameter as System.Windows.Controls.PasswordBox;
+            var password = passwordBox?.Password ?? "";
 
             if (_userManager.Login(Username, password))
             {
-                var recipeList = new RecipeListWindow(_userManager)
-                {
-                    DataContext = new RecipeListWindow(_userManager)
-                };
-                recipeList.Show();
-                Application.Current.Windows.OfType<MainWindow>().First().Close();
+                //MessageBox.Show("Login successful!");
+
+                var recipeWindow = new RecipeListWindow(_userManager, new RecipeManager());
+                recipeWindow.Show();
+
+                // Stäng loginfönstret
+                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
             }
             else
             {
-                MessageBox.Show("Wrong username or password.");
+                MessageBox.Show("Wrong username or password");
             }
         }
+        //private void Login(object parameter)
+        //{
+        //    var passwordBox = parameter as System.Windows.Controls.PasswordBox;
+        //    var password = passwordBox?.Password ?? "";
+
+        //    if (_userManager.Login(Username, password))
+        //    {
+        //        var recipeList = new RecipeListWindow(_userManager)
+        //        {
+        //            DataContext = new RecipeListWindow(_userManager)
+        //        };
+        //        recipeList.Show();
+        //        Application.Current.Windows.OfType<MainWindow>().First().Close();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Wrong username or password.");
+        //    }
+        //}
 
         private void OpenRegister(object parameter)
         {
             
-            var register = new RegisterWindow(_userManager);
+            var register = new RegisterWindow(App.GlobalUserManager);
             register.Show();
+            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
         }
         private void OpenForgotPassword(object _)
         {
