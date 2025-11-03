@@ -46,6 +46,7 @@ namespace Cookmaster
             {
                 Title = "Wakandan Spiced Stew",
                 Category = "African",
+                Time = "3 hours +",
                 Ingredients = "Meat, vegetables, spices",
                 Instructions = "Bring to a boil and let simmer fpr three hours.",
                 CreatedBy = user.Username,
@@ -57,11 +58,29 @@ namespace Cookmaster
             {
                 Title = "Latverian Pancakes",
                 Category = "Breakfast",
+                Time = "25 minutes",
                 Ingredients = "Flour, eggs, milk",
                 Instructions = "In a high-heat pan, fry til golden brown.",
                 CreatedBy = user.Username,
                 Date = DateTime.Now
             });
+
+            GlobalRecipeManager.AddRecipe(new Recipe
+            {
+                Title = "Swedish Stewed Macaroni",
+                Category = "Swedish Husman",
+                Time = "35 minutes",
+                Ingredients = "Macaroni, milk, salt",
+                Instructions = "Boil macaroni in milk for 20 mins",
+                CreatedBy = user.Username,
+                Date = DateTime.Today
+            });
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            var main = new MainWindow();
+            main.Show();
         }
     }
 

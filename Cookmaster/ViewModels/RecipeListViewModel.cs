@@ -27,6 +27,25 @@ namespace Cookmaster.ViewModels
         
         public string LoggedInUsername => _userManager.GetLoggedIn()?.Username ?? " ";
 
+        private string _selectedDateFilter;
+        public string SelectedDateFilter
+        {
+            get => _selectedDateFilter;
+            set
+            {
+                _selectedDateFilter = value;
+                OnPropertyChanged(nameof(SelectedDateFilter));
+            }
+        }
+
+        public List<string> DateFilterOptions { get; } = new List<string>
+        {
+            "Whenever",
+            "Today",
+            "Last 7 days",
+            "Last 30 days"
+        };
+
         public RelayCommand AddRecipeCommand { get; }
         public RelayCommand ViewDetailsCommand { get; }
         public RelayCommand RemoveRecipeCommand { get; }
@@ -56,8 +75,8 @@ namespace Cookmaster.ViewModels
 
         private void AddRecipe(object parameter)
         {
-            //var addWindow = new AddRecipeWindow(_userManager, _recipeManager);
-            //addWindow.ShowDialog();
+            var addWindow = new AddRecipeWindow(_recipeManager, _userManager);
+            addWindow.ShowDialog();
 
             RefreshRecipes();
         }
@@ -98,10 +117,11 @@ namespace Cookmaster.ViewModels
 
         private void FilterRecipes(object parameter)
         {
-            var filtered = _recipeManager.Filter(SearchText);
+            string keyword = SearchText ?? "";
+            string category = SelectedCategory ?? "";
+            string dateFilter = SelectedDateFilter ?? "Alla datum";
 
-            if (!string.IsNullOrWhiteSpace(SelectedCategory))
-                filtered = filtered.Where(r => r.Category == SelectedCategory).ToList();
+            var filtered = _recipeManager.Filter(keyword, category, dateFilter);
 
             Recipes = new ObservableCollection<Recipe>(filtered);
             OnPropertyChanged(nameof(Recipes));
@@ -130,6 +150,10 @@ namespace Cookmaster.ViewModels
 
         private void RefreshRecipes()
         {
+            var sortedRecipes = _recipeManager.GetAllRecipes()
+        .OrderByDescending(r => r.Date)
+        .ToList();
+
             Recipes = new ObservableCollection<Recipe>(_recipeManager.GetAllRecipes());
             Categories = new ObservableCollection<string>(_recipeManager.GetAllCategories());
             OnPropertyChanged(nameof(Recipes));

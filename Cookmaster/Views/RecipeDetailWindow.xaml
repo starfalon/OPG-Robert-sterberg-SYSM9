@@ -6,57 +6,61 @@
         xmlns:local="clr-namespace:Cookmaster.Views"
         mc:Ignorable="d"
         Title="RecipeDetailWindow" Height="450" Width="800">
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Recipe Details" 
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Recipe Details" 
                    FontSize="22" 
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Margin="0,0,0,15"/>
 
-        <StackPanel Grid.Row="1" VerticalAlignment="Top">
-            <TextBlock Text="Title:" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding EditableRecipe.Title, UpdateSourceTrigger=PropertyChanged}" 
+            <StackPanel Grid.Row="1" VerticalAlignment="Top">
+                <TextBlock Text="Title:" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding EditableRecipe.Title, UpdateSourceTrigger=PropertyChanged}" 
                      Margin="0,5,0,10"
                      IsReadOnly="{Binding IsLocked}"/>
-            <TextBlock Text="Category:" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding EditableRecipe.Category, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="Category:" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding EditableRecipe.Category, UpdateSourceTrigger=PropertyChanged}" 
                      Margin="0,5,0,10"
                      IsReadOnly="{Binding IsLocked}"/>
-            <TextBlock Text="Ingredients:" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding EditableRecipe.Ingredients, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="Date added: " FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding EditableRecipe.Date, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"/>
+                <TextBlock Text="Ingredients:" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding EditableRecipe.Ingredients, UpdateSourceTrigger=PropertyChanged}" 
                      AcceptsReturn="True" Height="80" 
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto"
                      Margin="0,5,0,10"
                      IsReadOnly="{Binding IsLocked}"/>
-            <TextBlock Text="Instructions:" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding EditableRecipe.Instructions, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="Instructions:" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding EditableRecipe.Instructions, UpdateSourceTrigger=PropertyChanged}" 
                      AcceptsReturn="True" Height="120" 
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto"
                      Margin="0,5,0,10"
                      IsReadOnly="{Binding IsLocked}"/>
-        </StackPanel>
-     
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <Button Content="Edit"
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="Edit"
                     Command="{Binding EditCommand}"
                     Width="80" Height="35"/>
-            <Button Content="Save"
+                <Button Content="Save"
                     Command="{Binding SaveCommand}"
                     Width="80" Height="35"
                     IsEnabled="{Binding IsEditing}"/>
-            <Button Content="Copy"
+                <Button Content="Copy"
                     Command="{Binding CopyCommand}"
                     Width="80" Height="35"/>
-            <Button Content="Close"
+                <Button Content="Close"
                     Command="{Binding CloseCommand}"
                     Width="80" Height="35"/>
-        </StackPanel>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>

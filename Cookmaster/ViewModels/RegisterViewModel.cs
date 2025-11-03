@@ -51,10 +51,16 @@ namespace Cookmaster.ViewModels
             string password = passwordBox?.Password ?? "";
             string confirmPassword = confirmBox?.Password ?? "";
 
-            
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("The passwords doesn't match, please try again");
+                return;
+            }
+
+
             if (!ValidatePassword(password, confirmPassword))
             {
-                MessageBox.Show("The password doesn't match, and has to include at least 8 characters, 1 capital letter and one number :)");
+                MessageBox.Show("The password has to include at least 8 characters, 1 capital letter and 1 number");
                 return;
             }
 

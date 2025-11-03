@@ -14,6 +14,8 @@ namespace Cookmaster.Managers
 
         public void AddRecipe(Recipe recipe)
         {
+            if (recipe.Date == default)
+                recipe.Date = DateTime.Now;
             recipes.Add(recipe);
         }
 
@@ -54,17 +56,67 @@ namespace Cookmaster.Managers
             return userRecipes;
         }
 
-        public List<Recipe> Filter(string search)
+        public List<Recipe> Filter(string search, string selectedCategory, string dateFilter)
         {
-            List<Recipe> filteredRecipes = new List<Recipe>();
+            var filtered = new List<Recipe>();
+
+            if (recipes == null || recipes.Count == 0)
+                return filtered;
+
+            DateTime? minDate = null;
+
+            if (dateFilter == "Last 7 days")
+                minDate = DateTime.Now.AddDays(-7);
+            else if (dateFilter == "Last 30 days")
+                minDate = DateTime.Now.AddDays(-30);
+            else if (dateFilter == "Today")
+                minDate = DateTime.Today;
+
             foreach (var recipe in recipes)
             {
-                if (recipe.Title.Contains(search) || recipe.Category.Contains(search))
+                bool match = true;
+
+                
+                if (!string.IsNullOrWhiteSpace(selectedCategory))
                 {
-                    filteredRecipes.Add(recipe);
+                    if (string.IsNullOrEmpty(recipe.Category) ||
+                        !recipe.Category.Equals(selectedCategory, StringComparison.OrdinalIgnoreCase))
+                    {
+                        match = false;
+                    }
                 }
+
+                
+                if (match && !string.IsNullOrWhiteSpace(search))
+                {
+                    bool textMatch = false;
+
+                    if (!string.IsNullOrEmpty(recipe.Title) &&
+                        recipe.Title.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        textMatch = true;
+                    }
+                    else if (!string.IsNullOrEmpty(recipe.Category) &&
+                             recipe.Category.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        textMatch = true;
+                    }
+
+                    if (!textMatch)
+                        match = false;
+                }
+
+                if (match && minDate.HasValue)
+                {
+                    if (recipe.Date < minDate.Value)
+                        match = false;
+                }
+
+                if (match)
+                    filtered.Add(recipe);
             }
-            return filteredRecipes;
+
+            return filtered;
         }
 
         public void UpdateRecipe(Recipe updatedRecipe)

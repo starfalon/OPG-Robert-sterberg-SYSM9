@@ -31,7 +31,7 @@ namespace Cookmaster.ViewModels
         }
         private void Login(object parameter)
         {
-            // ✅ parameter är PasswordBox (skickas från XAML)
+            
             var passwordBox = parameter as System.Windows.Controls.PasswordBox;
             var password = passwordBox?.Password ?? "";
 
