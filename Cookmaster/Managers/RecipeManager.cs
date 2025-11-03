@@ -31,7 +31,7 @@ namespace Cookmaster.Managers
             if (!recipes.Any())
                 return new List<string>();
 
-            // Returnera unika kategorier i bokstavsordning
+            
             return recipes
                 .Select(r => r.Category)
                 .Where(c => !string.IsNullOrWhiteSpace(c))

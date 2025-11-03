@@ -92,8 +92,8 @@ namespace Cookmaster.ViewModels
                 return;
             }
 
-            //var detailsWindow = new RecipeDetailWindow(SelectedRecipe);
-            //detailsWindow.ShowDialog();
+            var detailsWindow = new RecipeDetailWindow(SelectedRecipe, _recipeManager, _userManager);
+            detailsWindow.Show();
         }
 
         private void FilterRecipes(object parameter)

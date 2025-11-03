@@ -39,7 +39,7 @@ namespace Cookmaster.ViewModels
             {
                 //MessageBox.Show("Login successful!");
 
-                var recipeWindow = new RecipeListWindow(_userManager, new RecipeManager());
+                var recipeWindow = new RecipeListWindow(_userManager, App.GlobalRecipeManager);
                 recipeWindow.Show();
 
                 // Stäng loginfönstret
