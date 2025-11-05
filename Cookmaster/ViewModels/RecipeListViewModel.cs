@@ -70,7 +70,7 @@ namespace Cookmaster.ViewModels
             SignOutCommand = new RelayCommand(SignOut);
            
             ShowInfoCommand = new RelayCommand(ShowInfo);
-            //OpenUserDetailsCommand = new RelayCommand(OpenUserDetails);
+            OpenUserDetailsCommand = new RelayCommand(OpenUserDetails);
         }
 
         private void AddRecipe(object parameter)
@@ -119,7 +119,7 @@ namespace Cookmaster.ViewModels
         {
             string keyword = SearchText ?? "";
             string category = SelectedCategory ?? "";
-            string dateFilter = SelectedDateFilter ?? "Alla datum";
+            string dateFilter = SelectedDateFilter ?? "All time";
 
             var filtered = _recipeManager.Filter(keyword, category, dateFilter);
 
@@ -148,6 +148,12 @@ namespace Cookmaster.ViewModels
                 "About CookMaster", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        private void OpenUserDetails(object parameter)
+        {
+            var userDetails = new UserDetailsWindow(_userManager);
+            userDetails.ShowDialog();
+        }
+
         private void RefreshRecipes()
         {
             var sortedRecipes = _recipeManager.GetAllRecipes()
@@ -158,6 +164,10 @@ namespace Cookmaster.ViewModels
             Categories = new ObservableCollection<string>(_recipeManager.GetAllCategories());
             OnPropertyChanged(nameof(Recipes));
             OnPropertyChanged(nameof(Categories));
+        }
+        public void RefreshLoggedInUser()
+        {
+            OnPropertyChanged(nameof(LoggedInUsername));
         }
 
 

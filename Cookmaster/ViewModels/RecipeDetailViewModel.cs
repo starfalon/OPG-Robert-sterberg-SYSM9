@@ -95,9 +95,6 @@ namespace Cookmaster.ViewModels
 
             MessageBox.Show("Recipe copied");
 
-            var recipeListWindow = new RecipeListWindow(_userManager, _recipeManager);
-            recipeListWindow.Show();
-
             _window.Close();
         }
 

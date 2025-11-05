@@ -1,0 +1,23 @@
+﻿<Window x:Class="Cookmaster.Views.TwoFactorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cookmaster.Views"
+        mc:Ignorable="d"
+        Title="TwoFactorWindow" Height="450" Width="800">
+    
+        <StackPanel Margin="20" VerticalAlignment="Center">
+            <TextBlock Text="A verification code has been sent." 
+                   FontSize="14" TextAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Input code:" FontWeight="SemiBold" Margin="0,5"/>
+            <TextBox Text="{Binding EnteredCode}" FontSize="16" MaxLength="6"
+                 HorizontalAlignment="Center" Width="100"/>
+            <Button Content="Verify"
+                Command="{Binding VerifyCommand}"
+                Width="100" Height="35" Margin="0,15,0,0"
+                HorizontalAlignment="Center"/>
+            </StackPanel>
+</Window>
+
+

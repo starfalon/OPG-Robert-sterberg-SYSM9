@@ -35,41 +35,25 @@ namespace Cookmaster.ViewModels
             var passwordBox = parameter as System.Windows.Controls.PasswordBox;
             var password = passwordBox?.Password ?? "";
 
+
+
             if (_userManager.Login(Username, password))
             {
-                //MessageBox.Show("Login successful!");
 
-                var recipeWindow = new RecipeListWindow(_userManager, App.GlobalRecipeManager);
-                recipeWindow.Show();
+               TwoFactorWindow twoFactorWindow = new TwoFactorWindow(OnTwoFactorSuccess);
+                twoFactorWindow.ShowDialog();
 
-                // Stäng loginfönstret
-                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
+                //var recipeWindow = new RecipeListWindow(_userManager, App.GlobalRecipeManager);
+                //recipeWindow.Show();
+
+                //Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
             }
             else
             {
                 MessageBox.Show("Wrong username or password");
             }
         }
-        //private void Login(object parameter)
-        //{
-        //    var passwordBox = parameter as System.Windows.Controls.PasswordBox;
-        //    var password = passwordBox?.Password ?? "";
-
-        //    if (_userManager.Login(Username, password))
-        //    {
-        //        var recipeList = new RecipeListWindow(_userManager)
-        //        {
-        //            DataContext = new RecipeListWindow(_userManager)
-        //        };
-        //        recipeList.Show();
-        //        Application.Current.Windows.OfType<MainWindow>().First().Close();
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Wrong username or password.");
-        //    }
-        //}
-
+        
         private void OpenRegister(object parameter)
         {
             
@@ -82,6 +66,16 @@ namespace Cookmaster.ViewModels
             var forgot = new ForgotPasswordWindow(_userManager);
             
             forgot.Show();
+        }
+
+        private void OnTwoFactorSuccess()
+        {
+            
+            var recipeWindow = new RecipeListWindow(_userManager, App.GlobalRecipeManager);
+            recipeWindow.Show();
+
+            
+            Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
         }
 
     }

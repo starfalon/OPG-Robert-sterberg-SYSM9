@@ -1,0 +1,53 @@
+﻿<Window x:Class="Cookmaster.Views.UserDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cookmaster.Views"
+        mc:Ignorable="d"
+        Title="UserDetailsWindow" Height="450" Width="800">
+    <Grid>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="User Details"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+            <StackPanel Grid.Row="1" VerticalAlignment="Top">
+
+                <TextBlock Text="Current username:" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding CurrentUsername}" />
+
+                <TextBlock Text="Cureent country:" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding CurrentCountry}" />
+
+                <Separator Margin="0,10,0,10"/>
+
+                <TextBlock Text="New username:" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding NewUsername}" />
+
+                <TextBlock Text="New password:" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="PasswordBox" />
+
+                <TextBlock Text="Confirm password:" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="ConfirmPasswordBox" />
+
+                <TextBlock Text="Country:" FontWeight="SemiBold"/>
+                <ComboBox ItemsSource="{Binding Countries}" 
+                      SelectedItem="{Binding SelectedCountry}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Height="35"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Height="35"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
