@@ -31,22 +31,19 @@ namespace Cookmaster.ViewModels
         }
         private void Login(object parameter)
         {
-            
-            var passwordBox = parameter as System.Windows.Controls.PasswordBox;
+
+            var passwordBox = parameter as PasswordBox;
             var password = passwordBox?.Password ?? "";
-
-
 
             if (_userManager.Login(Username, password))
             {
+                var twoFactorWindow = new TwoFactorWindow(OnTwoFactorSuccess);
+                bool? result = twoFactorWindow.ShowDialog();  // vänta tills det stängs
 
-               TwoFactorWindow twoFactorWindow = new TwoFactorWindow(OnTwoFactorSuccess);
-                twoFactorWindow.ShowDialog();
-
-                //var recipeWindow = new RecipeListWindow(_userManager, App.GlobalRecipeManager);
-                //recipeWindow.Show();
-
-                //Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
+                if (result == true)
+                {
+                    OnTwoFactorSuccess();  // ✅ öppna RecipeListWindow först nu
+                }
             }
             else
             {
@@ -70,12 +67,17 @@ namespace Cookmaster.ViewModels
 
         private void OnTwoFactorSuccess()
         {
-            
-            var recipeWindow = new RecipeListWindow(_userManager, App.GlobalRecipeManager);
+
+            var recipeWindow = new RecipeListWindow(App.GlobalUserManager, App.GlobalRecipeManager);
             recipeWindow.Show();
 
-            
+            // 🔹 Ladda användarens recept direkt
+            if (recipeWindow.DataContext is RecipeListViewModel vm)
+                vm.RefreshRecipes();
+
+            // 🔹 Stäng login och 2FA-fönster
             Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
+            Application.Current.Windows.OfType<TwoFactorWindow>().FirstOrDefault()?.Close();
         }
 
     }

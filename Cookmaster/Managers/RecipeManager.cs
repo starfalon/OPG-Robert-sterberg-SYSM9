@@ -14,14 +14,34 @@ namespace Cookmaster.Managers
 
         public void AddRecipe(Recipe recipe)
         {
+            //if (recipe.Date == default)
+            //    recipe.Date = DateTime.Now;
+            //recipes.Add(recipe);
+
+            if (recipe == null) return;
+
             if (recipe.Date == default)
                 recipe.Date = DateTime.Now;
-            recipes.Add(recipe);
+
+            // 🔒 Dublettskydd (Title + CreatedBy räcker ofta i skolprojekt)
+            bool exists = recipes.Any(r =>
+                string.Equals(r.Title, recipe.Title, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(r.CreatedBy, recipe.CreatedBy, StringComparison.OrdinalIgnoreCase));
+
+            if (!exists)
+                recipes.Add(recipe);
         }
 
-        public void RemoveRecipe(Recipe r)
+        public void RemoveRecipe(Recipe recipe)
         {
-            recipes.Remove(r);
+            if (recipe == null) return;
+
+            var match = recipes.FirstOrDefault(r =>
+                string.Equals(r.Title, recipe.Title, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(r.CreatedBy, recipe.CreatedBy, StringComparison.OrdinalIgnoreCase));
+
+            if (match != null)
+                recipes.Remove(match);
         }
         public List<Recipe> GetAllRecipes() //??
         {
@@ -44,16 +64,20 @@ namespace Cookmaster.Managers
 
         public List<Recipe> GetByUser(User user)
         {
-            List<Recipe> userRecipes = new List<Recipe>();
-            foreach (var recipe in recipes)
-            {
-                if (recipe.CreatedBy == user.Username)
-                {
-                    userRecipes.Add(recipe);
-                }
-            
-            }
-            return userRecipes;
+            //List<Recipe> userRecipes = new List<Recipe>();
+            //foreach (var recipe in recipes)
+            //{
+            //    if (recipe.CreatedBy == user.Username)
+            //    {
+            //        userRecipes.Add(recipe);
+            //    }
+
+            //}
+            //return userRecipes;
+
+            return recipes
+        .Where(r => string.Equals(r.CreatedBy, user.Username, StringComparison.OrdinalIgnoreCase))
+        .ToList();
         }
 
         public List<Recipe> Filter(string search, string selectedCategory, string dateFilter)

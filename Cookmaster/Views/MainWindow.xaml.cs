@@ -19,7 +19,7 @@ namespace Cookmaster.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly UserManager _userManager = new UserManager();
+        private readonly UserManager _userManager = new UserManager(App.GlobalRecipeManager);
         public MainWindow()
         {
             InitializeComponent();

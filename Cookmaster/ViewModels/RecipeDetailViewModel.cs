@@ -87,7 +87,7 @@ namespace Cookmaster.ViewModels
                 Category = EditableRecipe.Category,
                 Ingredients = EditableRecipe.Ingredients,
                 Instructions = EditableRecipe.Instructions,
-                CreatedBy = currentUser.Username,
+                CreatedBy = currentUser?.Username ?? "Unknown",
                 Date = DateTime.Now
             };
 

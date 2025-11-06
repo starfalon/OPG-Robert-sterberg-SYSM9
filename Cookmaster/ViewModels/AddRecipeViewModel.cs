@@ -22,7 +22,7 @@ namespace Cookmaster.ViewModels
         public string Ingredients { get; set; }
         public string Instructions { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
-        public string Time { get; set; }
+        
 
         public RelayCommand SaveCommand { get; }
         public RelayCommand CancelCommand { get; }
@@ -43,22 +43,21 @@ namespace Cookmaster.ViewModels
                 string.IsNullOrWhiteSpace(Category) ||
                 string.IsNullOrWhiteSpace(Ingredients) ||
                 string.IsNullOrWhiteSpace(Instructions) ||
-                string.IsNullOrWhiteSpace(Time) ||
                 Date == default)
             {
                 MessageBox.Show("Please fill out all spaces before saving!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            var currentUser = _userManager.GetLoggedIn();
             var newRecipe = new Recipe
             {
                 Title = Title,
                 Category = Category,
                 Ingredients = Ingredients,
                 Instructions = Instructions,
-                Time = Time,
                 Date = Date,
-                CreatedBy = _userManager.GetLoggedIn()?.Username ?? "Unknown"
+                CreatedBy = currentUser.Username //_userManager.GetLoggedIn()?.Username ?? "Unknown"
             };
 
             _recipeManager.AddRecipe(newRecipe);

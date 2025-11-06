@@ -15,15 +15,15 @@ namespace Cookmaster.Models
         public string Category { get; set; }
         public DateTime Date { get; set; } //?
         public string CreatedBy { get; set; }
-        public string Time {  get; set; }
+        
 
-        public void EditRecipe (string title, string ingredients, string instructions, string category, string time) 
+        public void EditRecipe (string title, string ingredients, string instructions, string category) 
         {
             Title = title;
             Ingredients = ingredients;
             Instructions = instructions;
             Category = category;
-            Time = time;
+            
         }
         public Recipe CopyRecipe()
         {
@@ -35,7 +35,7 @@ namespace Cookmaster.Models
                 Category = Category,
                 Date = Date,
                 CreatedBy = CreatedBy,
-                Time = Time
+                
             };
         }
 

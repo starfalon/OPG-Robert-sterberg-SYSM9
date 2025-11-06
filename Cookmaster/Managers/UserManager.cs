@@ -10,27 +10,78 @@ namespace Cookmaster.Managers
     public class UserManager
     {
         private List<User> users = new List<User>();
-        private User loggedIn;
+        private User? loggedIn;
+        private RecipeManager _recipeManager;
 
-        public UserManager()
+        private static bool _seeded = false;
+
+        public UserManager(RecipeManager recipeManager)
         {
-            // 🔹 Förinställda användare
-            users.Add(new AdminUser
+            _recipeManager = recipeManager;
+
+            var admin = new AdminUser
             {
                 Username = "admin",
                 Password = "password",
                 Country = "Sokovia",
                 SecurityQuestion = "What is your favorite color?",
                 SecurityAnswer = "red"
-            });
+            };
 
-            users.Add(new User
+            var user = new User
             {
                 Username = "user",
                 Password = "password",
                 Country = "Latveria",
-                SecurityQuestion = "What is the name of your firrst pet?",
+                SecurityQuestion = "What is the name of your first pet?",
                 SecurityAnswer = "göran"
+            };
+
+            var testUser = new User
+            {
+                Username = "test",
+                Password = "test",
+                Country = "Latveria",
+                SecurityQuestion = "What is the name of your first pet?",
+                SecurityAnswer = "göran"
+            };
+
+            users.Add(admin);
+            users.Add(user);
+            users.Add(testUser);
+
+            if (_seeded) return;
+            _seeded = true;
+
+
+            _recipeManager.AddRecipe(new Recipe
+            {
+                Title = "Wakandan Spiced Stew",
+                Category = "African",
+                Ingredients = "Meat, vegetables, spices",
+                Instructions = "Bring to a boil and let simmer for three hours.",
+                CreatedBy = user.Username, 
+                Date = DateTime.Now
+            });
+
+            _recipeManager.AddRecipe(new Recipe
+            {
+                Title = "Latverian Pancakes",
+                Category = "Breakfast",
+                Ingredients = "Flour, eggs, milk",
+                Instructions = "In a high-heat pan, fry til golden brown.",
+                CreatedBy = user?.Username ?? "system",
+                Date = DateTime.Now
+            });
+
+            _recipeManager.AddRecipe(new Recipe
+            {
+                Title = "Swedish Stewed Macaroni",
+                Category = "Swedish Husman",
+                Ingredients = "Macaroni, milk, salt",
+                Instructions = "Boil macaroni in milk for 20 mins",
+                CreatedBy = user?.Username ?? "system",
+                Date = DateTime.Today
             });
         }
 
@@ -61,7 +112,7 @@ namespace Cookmaster.Managers
             return true;
         }
 
-        public User FindUser(string username)  //letar upp users i listan user
+        public User? FindUser(string username)  
         {
             foreach (var user in users)
             {
@@ -85,7 +136,7 @@ namespace Cookmaster.Managers
             }
         }
 
-        public User GetLoggedIn() //loggedin = currentuser
+        public User? GetLoggedIn() //loggedin = currentuser
         {
             return loggedIn;
         }
@@ -101,6 +152,11 @@ namespace Cookmaster.Managers
 
             user.Password = newPassword;
             return true;
+        }
+
+        public void Logout()
+        {
+            loggedIn = null;
         }
     }
 

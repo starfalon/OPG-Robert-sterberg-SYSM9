@@ -60,7 +60,8 @@ namespace Cookmaster.ViewModels
             _userManager = usermanager;
             _recipeManager = recipemanager;
 
-            Recipes = new ObservableCollection<Recipe>(_recipeManager.GetAllRecipes());
+            RefreshRecipes();
+            //Recipes = new ObservableCollection<Recipe>(_recipeManager.GetAllRecipes());
             Categories = new ObservableCollection<string>(_recipeManager.GetAllCategories());
 
             AddRecipeCommand = new RelayCommand(AddRecipe);
@@ -129,6 +130,9 @@ namespace Cookmaster.ViewModels
 
         private void SignOut(object parameter)
         {
+            _userManager.Logout();
+            Recipes?.Clear();
+            OnPropertyChanged(nameof(Recipes));
             var loginWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(App.GlobalUserManager)
@@ -154,22 +158,29 @@ namespace Cookmaster.ViewModels
             userDetails.ShowDialog();
         }
 
-        private void RefreshRecipes()
+        public void RefreshRecipes()
         {
-            var sortedRecipes = _recipeManager.GetAllRecipes()
-        .OrderByDescending(r => r.Date)
-        .ToList();
+            var currentUser = _userManager.GetLoggedIn();
 
-            Recipes = new ObservableCollection<Recipe>(_recipeManager.GetAllRecipes());
-            Categories = new ObservableCollection<string>(_recipeManager.GetAllCategories());
+            if (currentUser == null)
+            {
+                Recipes = new ObservableCollection<Recipe>();
+                OnPropertyChanged(nameof(Recipes));
+                return;
+            }
+
+            var visibleRecipes = (currentUser is AdminUser)
+                ? _recipeManager.GetAllRecipes()
+                : _recipeManager.GetByUser(currentUser);
+
+            Recipes = new ObservableCollection<Recipe>(visibleRecipes);
             OnPropertyChanged(nameof(Recipes));
-            OnPropertyChanged(nameof(Categories));
         }
+
         public void RefreshLoggedInUser()
         {
             OnPropertyChanged(nameof(LoggedInUsername));
         }
-
 
     }
 }

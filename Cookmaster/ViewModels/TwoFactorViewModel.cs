@@ -46,7 +46,7 @@ namespace Cookmaster.ViewModels
                 {
                     win.Close();
                 }
-                _onSuccess?.Invoke();  
+                _window.DialogResult = true;   // ✅ ange resultatet
                 _window.Close();
             }
             else
