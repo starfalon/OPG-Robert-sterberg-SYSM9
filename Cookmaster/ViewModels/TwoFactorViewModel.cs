@@ -1,8 +1,9 @@
-﻿using Cookmaster.MVVM;
+﻿using Cookmaster.Managers;
+using Cookmaster.Models;
+using Cookmaster.MVVM;
 using Cookmaster.Views;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +33,7 @@ namespace Cookmaster.ViewModels
             var rand = new Random();
             _generatedCode = rand.Next(100000, 999999).ToString();
 
-            //MessageBox.Show("Your verification code: " + _generatedCode);
-
-            VerifyCommand = new RelayCommand(Verify);
+           VerifyCommand = new RelayCommand(Verify);
         }
 
         private void Verify(object parameter)
@@ -46,7 +45,7 @@ namespace Cookmaster.ViewModels
                 {
                     win.Close();
                 }
-                _window.DialogResult = true;   // ✅ ange resultatet
+                _window.DialogResult = true;
                 _window.Close();
             }
             else

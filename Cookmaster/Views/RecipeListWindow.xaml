@@ -40,17 +40,7 @@
          Padding="5"
          MinHeight="300"/>
 
-            <!--<ListView ItemsSource="{Binding Recipes}" SelectedItem="{Binding SelectedRecipe}" Grid.Row="0">
-                <ListView.View>
-                    <GridView>
-                        
-                        --><!--<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Title}" Width="200"/>-->
-                        <!--<GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="150"/>
-                        <GridViewColumn Header="Date added" DisplayMemberBinding="{Binding Date, StringFormat='{}{0:yyyy-MM-dd}'}" Width="120"/>
-                        <GridViewColumn Header="Created by" DisplayMemberBinding="{Binding CreatedBy}" Width="120"/>--><!--
-                    </GridView>
-                </ListView.View>
-            </ListView>-->
+            
            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Margin="0,10,0,0">
                 <Button Content="Add Recipe" Command="{Binding AddRecipeCommand}" Width="120" Margin="5"/>
                 <Button Content="Details" Command="{Binding ViewDetailsCommand}" Width="120" Margin="5"/>

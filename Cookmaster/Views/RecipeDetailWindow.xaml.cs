@@ -27,9 +27,6 @@ namespace Cookmaster.Views
             InitializeComponent();
             DataContext = DataContext = new RecipeDetailViewModel(recipe, manager, userManager, this); ;
         }
-        //private void Close_Click(object sender, RoutedEventArgs e)
-        //{
-        //    this.Close();
-        //}
+     
     }
 }

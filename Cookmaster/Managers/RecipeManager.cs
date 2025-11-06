@@ -9,43 +9,23 @@ namespace Cookmaster.Managers
 {
     public class RecipeManager
     {
-        public List<Recipe> recipes = new List<Recipe>();
-
+        private readonly List<Recipe> recipes = new List<Recipe>();
 
         public void AddRecipe(Recipe recipe)
         {
-            //if (recipe.Date == default)
-            //    recipe.Date = DateTime.Now;
-            //recipes.Add(recipe);
-
-            if (recipe == null) return;
-
             if (recipe.Date == default)
                 recipe.Date = DateTime.Now;
-
-            // 🔒 Dublettskydd (Title + CreatedBy räcker ofta i skolprojekt)
-            bool exists = recipes.Any(r =>
-                string.Equals(r.Title, recipe.Title, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(r.CreatedBy, recipe.CreatedBy, StringComparison.OrdinalIgnoreCase));
-
-            if (!exists)
-                recipes.Add(recipe);
+            recipes.Add(recipe);
         }
 
-        public void RemoveRecipe(Recipe recipe)
+        public void RemoveRecipe(Recipe r)
         {
-            if (recipe == null) return;
-
-            var match = recipes.FirstOrDefault(r =>
-                string.Equals(r.Title, recipe.Title, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(r.CreatedBy, recipe.CreatedBy, StringComparison.OrdinalIgnoreCase));
-
-            if (match != null)
-                recipes.Remove(match);
+            recipes.Remove(r);
         }
-        public List<Recipe> GetAllRecipes() //??
+
+        public List<Recipe> GetAllRecipes()
         {
-            return recipes;
+            return recipes.ToList();
         }
 
         public List<string> GetAllCategories()
@@ -53,7 +33,6 @@ namespace Cookmaster.Managers
             if (!recipes.Any())
                 return new List<string>();
 
-            
             return recipes
                 .Select(r => r.Category)
                 .Where(c => !string.IsNullOrWhiteSpace(c))
@@ -64,20 +43,9 @@ namespace Cookmaster.Managers
 
         public List<Recipe> GetByUser(User user)
         {
-            //List<Recipe> userRecipes = new List<Recipe>();
-            //foreach (var recipe in recipes)
-            //{
-            //    if (recipe.CreatedBy == user.Username)
-            //    {
-            //        userRecipes.Add(recipe);
-            //    }
-
-            //}
-            //return userRecipes;
-
             return recipes
-        .Where(r => string.Equals(r.CreatedBy, user.Username, StringComparison.OrdinalIgnoreCase))
-        .ToList();
+                .Where(r => string.Equals(r.CreatedBy, user.Username, StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
         public List<Recipe> Filter(string search, string selectedCategory, string dateFilter)
@@ -100,7 +68,6 @@ namespace Cookmaster.Managers
             {
                 bool match = true;
 
-                
                 if (!string.IsNullOrWhiteSpace(selectedCategory))
                 {
                     if (string.IsNullOrEmpty(recipe.Category) ||
@@ -110,7 +77,6 @@ namespace Cookmaster.Managers
                     }
                 }
 
-                
                 if (match && !string.IsNullOrWhiteSpace(search))
                 {
                     bool textMatch = false;

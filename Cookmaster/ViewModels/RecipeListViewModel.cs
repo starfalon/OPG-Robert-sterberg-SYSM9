@@ -61,7 +61,7 @@ namespace Cookmaster.ViewModels
             _recipeManager = recipemanager;
 
             RefreshRecipes();
-            //Recipes = new ObservableCollection<Recipe>(_recipeManager.GetAllRecipes());
+            
             Categories = new ObservableCollection<string>(_recipeManager.GetAllCategories());
 
             AddRecipeCommand = new RelayCommand(AddRecipe);
@@ -92,7 +92,12 @@ namespace Cookmaster.ViewModels
 
             var currentUser = _userManager.GetLoggedIn();
 
-            
+            if (currentUser == null)
+            {
+                MessageBox.Show("No user is currently logged in");
+                return;
+            }
+
             if (currentUser is AdminUser || SelectedRecipe.CreatedBy == currentUser.Username)
             {
                 _recipeManager.RemoveRecipe(SelectedRecipe);
@@ -145,7 +150,7 @@ namespace Cookmaster.ViewModels
         private void ShowInfo(object parameter)
         {
             MessageBox.Show(
-                "CookMaster share and save all your favorite recipes!\n\n" +
+                "CookMaster! Save all your favorite recipes!\n\n" +
                 "• Click 'Add Recipe' to store a new recipe.\n" +
                 "• Click 'Details' fpr more information about your recipe.\n" +
                 "• Click User Details to see information about your account",

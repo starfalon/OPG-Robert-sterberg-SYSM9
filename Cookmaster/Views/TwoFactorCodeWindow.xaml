@@ -10,7 +10,6 @@
         <TextBlock Text="{Binding Code}" 
                    FontSize="32" 
                    FontWeight="Bold"
-                   Foreground="DarkRed"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
     </Grid>

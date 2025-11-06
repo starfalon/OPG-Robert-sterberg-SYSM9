@@ -38,11 +38,11 @@ namespace Cookmaster.ViewModels
             if (_userManager.Login(Username, password))
             {
                 var twoFactorWindow = new TwoFactorWindow(OnTwoFactorSuccess);
-                bool? result = twoFactorWindow.ShowDialog();  // vänta tills det stängs
+                bool? result = twoFactorWindow.ShowDialog();  
 
                 if (result == true)
                 {
-                    OnTwoFactorSuccess();  // ✅ öppna RecipeListWindow först nu
+                    OnTwoFactorSuccess();  
                 }
             }
             else
@@ -71,11 +71,9 @@ namespace Cookmaster.ViewModels
             var recipeWindow = new RecipeListWindow(App.GlobalUserManager, App.GlobalRecipeManager);
             recipeWindow.Show();
 
-            // 🔹 Ladda användarens recept direkt
             if (recipeWindow.DataContext is RecipeListViewModel vm)
-                vm.RefreshRecipes();
+            vm.RefreshRecipes();
 
-            // 🔹 Stäng login och 2FA-fönster
             Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
             Application.Current.Windows.OfType<TwoFactorWindow>().FirstOrDefault()?.Close();
         }

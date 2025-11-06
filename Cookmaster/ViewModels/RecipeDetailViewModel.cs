@@ -71,9 +71,6 @@ namespace Cookmaster.ViewModels
 
             MessageBox.Show("Recipe saved");
 
-            //var recipeListWindow = new RecipeListWindow(_userManager, _recipeManager);
-            //recipeListWindow.Show();
-
             _window.Close();
         }
 

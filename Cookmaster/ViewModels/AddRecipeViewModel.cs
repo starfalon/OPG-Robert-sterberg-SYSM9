@@ -22,7 +22,7 @@ namespace Cookmaster.ViewModels
         public string Ingredients { get; set; }
         public string Instructions { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
-        
+        public string Time { get; set; }
 
         public RelayCommand SaveCommand { get; }
         public RelayCommand CancelCommand { get; }
@@ -50,6 +50,8 @@ namespace Cookmaster.ViewModels
             }
 
             var currentUser = _userManager.GetLoggedIn();
+            string createdBy = currentUser?.Username ?? "Unknown";
+
             var newRecipe = new Recipe
             {
                 Title = Title,
@@ -57,16 +59,13 @@ namespace Cookmaster.ViewModels
                 Ingredients = Ingredients,
                 Instructions = Instructions,
                 Date = Date,
-                CreatedBy = currentUser.Username //_userManager.GetLoggedIn()?.Username ?? "Unknown"
+                CreatedBy = createdBy
             };
 
             _recipeManager.AddRecipe(newRecipe);
 
             MessageBox.Show("Recipe saved!");
 
-            
-            //var listWindow = new RecipeListWindow(_userManager, _recipeManager);
-            //listWindow.Show();
             _window.Close();
             return;
         }
